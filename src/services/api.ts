@@ -11,10 +11,13 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
         case 'all':
           // Fetch from NewsAPI
           const newsApiResponse = await fetch(
-            category ?
+            category !== 'all' ?
             `https://newsapi.org/v2/top-headlines?q=${keyword}&from=${date}&category=${category}&apiKey=${NEWS_API_KEY}`
             :
+            keyword.length > 0 ?
             `https://newsapi.org/v2/everything?q=${keyword}&from=${date}&apiKey=${NEWS_API_KEY}`
+            :
+            `https://newsapi.org/v2/everything?q=${category}&from=${date}&apiKey=${NEWS_API_KEY}`
           );
           const newsApiData = await newsApiResponse.json();
           const formattedNewsApiArticles = newsApiData.articles.map((article: any, index: number) => ({
@@ -28,7 +31,7 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
   
           // Fetch from New York Times API
           const nytApiResponse = await fetch(
-            `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${keyword}${date ? `&begin_date=${date}` : ``}&api-key=${NYT_API_KEY}`
+            `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${keyword}${date && `&begin_date=${date}`}${category !== "all" && `fq=${category}`}&api-key=${NYT_API_KEY}`
           );
           const nytApiData = await nytApiResponse.json();
           const formattedNytArticles = nytApiData.response.docs.map((article: any, index: number) => ({
@@ -42,7 +45,7 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
   
           // Fetch from The Guardian API
           const guardianApiResponse = await fetch(
-            `https://content.guardianapis.com/search?q=${keyword}${date ? `&from-date=${date}` : ``}&section=${category}&api-key=${GUARDIAN_API_KEY}&show-fields=headline,thumbnail,body`
+             `https://content.guardianapis.com/search?q=${keyword}${date && `&from-date=${date}`}${category !== 'all' && `&section=${category}`}&api-key=${GUARDIAN_API_KEY}&show-fields=headline,thumbnail,body`
           );
           const guardianApiData = await guardianApiResponse.json();
           const formattedGuardianArticles = guardianApiData.response.results.map((article: any, index: number) => ({
@@ -65,10 +68,13 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
         case 'newsapi':
           // Fetch from NewsAPI (using BBC as the source)
           const newsApiOnlyResponse = await fetch(
-            category ?
+            category !== 'all' ?
             `https://newsapi.org/v2/top-headlines?q=${keyword}&from=${date}&category=${category}&apiKey=${NEWS_API_KEY}`
             :
+            keyword.length > 0 ?
             `https://newsapi.org/v2/everything?q=${keyword}&from=${date}&apiKey=${NEWS_API_KEY}`
+            :
+            `https://newsapi.org/v2/everything?q=${category}&from=${date}&apiKey=${NEWS_API_KEY}`
           );
           const newsapiData = await newsApiOnlyResponse.json();
           allArticles = newsapiData.articles.map((article: any, index: number) => ({
@@ -84,7 +90,7 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
         case 'nyt':
           // Fetch from New York Times API
           const nytOnlyResponse = await fetch(
-            `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${keyword}${date ? `&begin_date=${date}` : ``}&api-key=${NYT_API_KEY}`
+            `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${keyword}${date && `&begin_date=${date}`}${category !== "all" && `fq=${category}`}&api-key=${NYT_API_KEY}`
           );
           const nytOnlyData = await nytOnlyResponse.json();
           allArticles = nytOnlyData.response.docs.map((article: any, index: number) => ({
@@ -100,7 +106,7 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
         case 'guardian':
           // Fetch from The Guardian API
           const guardianOnlyResponse = await fetch(
-            `https://content.guardianapis.com/search?q=${keyword}${date ? `&from-date=${date}` : ``}&section=${category}&api-key=${GUARDIAN_API_KEY}&show-fields=headline,thumbnail,body`
+            `https://content.guardianapis.com/search?q=${keyword}${date && `&from-date=${date}`}${category !== 'all' && `&section=${category}`}&api-key=${GUARDIAN_API_KEY}&show-fields=headline,thumbnail,body`
           );
           const guardianOnlyData = await guardianOnlyResponse.json();
           allArticles = guardianOnlyData.response.results.map((article: any, index: number) => ({
