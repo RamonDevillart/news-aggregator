@@ -41,6 +41,7 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
             imageUrl: `https://www.nytimes.com/${article.multimedia?.[0]?.url}`,
             source: 'The New York Times',
             date: article.pub_date,
+            web_url: article.web_url,
           }));
   
           // Fetch from The Guardian API
@@ -55,6 +56,7 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
             imageUrl: article.fields.thumbnail,
             source: 'The Guardian',
             date: article.webPublicationDate,
+            web_url: article.webUrl,
           }));
   
           // Combine all articles
@@ -100,6 +102,7 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
             imageUrl: `https://www.nytimes.com/${article.multimedia?.[0]?.url}`,
             source: 'The New York Times',
             date: article.pub_date,
+            web_url: article.web_url,
           }));
           break;
   
@@ -116,6 +119,7 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
             imageUrl: article.fields.thumbnail,
             source: 'The Guardian',
             date: article.webPublicationDate,
+            web_url: article.webUrl,
           }));
           break;
   

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-export const CardContainer = styled.div`
+export const CardContainer = styled.a`
+text-decoration:none;
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;

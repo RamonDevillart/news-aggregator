@@ -11,7 +11,7 @@ import {
 
 const ArticleCard: React.FC<{ article: any }> = ({ article }) => {
   return (
-    <CardContainer>
+    <CardContainer href={article.web_url} target="_blank" rel="noopener noreferrer">
       {article.imageUrl && <ArticleImage src={article.imageUrl} alt={article.title} />}
       <ArticleTitle>{article.title}</ArticleTitle>
       <ArticleSnippet>{article.snippet}</ArticleSnippet>
