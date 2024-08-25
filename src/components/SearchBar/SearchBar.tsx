@@ -62,7 +62,7 @@ const SearchBar: React.FC<{ onSearch: (articles: any[]) => void }> = ({ onSearch
       </SelectInput>
       <SelectInput value={source} onChange={(e) => setSource(e.target.value)}>
         <option value="all">All Sources</option>
-        <option value="newsapi">News Api</option>
+        {/* <option value="newsapi">News Api</option>  //REMOVED DUE TO PAYD VERSION REQUIRED */}  
         <option value="guardian">The Guardian</option>
         <option value="nyt">New York Times</option>
       </SelectInput>
