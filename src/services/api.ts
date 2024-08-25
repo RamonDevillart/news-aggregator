@@ -9,25 +9,25 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
   
       switch (source) {
         case 'all':
-          // Fetch from NewsAPI
-          const newsApiResponse = await fetch(
-            category !== 'all' ?
-            `https://newsapi.org/v2/top-headlines?q=${keyword}&from=${date}&category=${category}&apiKey=${NEWS_API_KEY}`
-            :
-            keyword.length > 0 ?
-            `https://newsapi.org/v2/everything?q=${keyword}&from=${date}&apiKey=${NEWS_API_KEY}`
-            :
-            `https://newsapi.org/v2/everything?q=${category}&from=${date}&apiKey=${NEWS_API_KEY}`
-          );
-          const newsApiData = await newsApiResponse.json();
-          const formattedNewsApiArticles = newsApiData.articles.map((article: any, index: number) => ({
-            id: `newsapi-${index}`,
-            title: article.title,
-            snippet: article.description,
-            imageUrl: article.urlToImage,
-            source: article.source.name,
-            date: article.publishedAt,
-          }));
+          // Fetch from NewsAPI  REMOVED DUE TO PAYD VERSION REQUIRED
+        //   const newsApiResponse = await fetch(
+        //     category !== 'all' ?
+        //     `https://newsapi.org/v2/top-headlines?q=${keyword}&from=${date}&category=${category}&apiKey=${NEWS_API_KEY}`
+        //     :
+        //     keyword.length > 0 ?
+        //     `https://newsapi.org/v2/everything?q=${keyword}&from=${date}&apiKey=${NEWS_API_KEY}`
+        //     :
+        //     `https://newsapi.org/v2/everything?q=${category}&from=${date}&apiKey=${NEWS_API_KEY}`
+        //   );
+        //   const newsApiData = await newsApiResponse.json();
+        //   const formattedNewsApiArticles = newsApiData.articles.map((article: any, index: number) => ({
+        //     id: `newsapi-${index}`,
+        //     title: article.title,
+        //     snippet: article.description,
+        //     imageUrl: article.urlToImage,
+        //     source: article.source.name,
+        //     date: article.publishedAt,
+        //   }));
   
           // Fetch from New York Times API
           const nytApiResponse = await fetch(
@@ -59,33 +59,33 @@ export const fetchNewsArticles = async (keyword: string, date: string, category:
   
           // Combine all articles
           allArticles = [
-            ...formattedNewsApiArticles,
+            // ...formattedNewsApiArticles,
             ...formattedNytArticles,
             ...formattedGuardianArticles,
           ];
           break;
   
-        case 'newsapi':
-          // Fetch from NewsAPI (using BBC as the source)
-          const newsApiOnlyResponse = await fetch(
-            category !== 'all' ?
-            `https://newsapi.org/v2/top-headlines?q=${keyword}&from=${date}&category=${category}&apiKey=${NEWS_API_KEY}`
-            :
-            keyword.length > 0 ?
-            `https://newsapi.org/v2/everything?q=${keyword}&from=${date}&apiKey=${NEWS_API_KEY}`
-            :
-            `https://newsapi.org/v2/everything?q=${category}&from=${date}&apiKey=${NEWS_API_KEY}`
-          );
-          const newsapiData = await newsApiOnlyResponse.json();
-          allArticles = newsapiData.articles.map((article: any, index: number) => ({
-            id: `newsapi-${index}`,
-            title: article.title,
-            snippet: article.description,
-            imageUrl: article.urlToImage,
-            source: article.source.name,
-            date: article.publishedAt,
-          }));
-          break;
+        // case 'newsapi':
+        //   // Fetch from NewsAPI // Fetch from NewsAPI  REMOVED DUE TO PAYD VERSION REQUIRED
+        //   const newsApiOnlyResponse = await fetch(
+        //     category !== 'all' ?
+        //     `https://newsapi.org/v2/top-headlines?q=${keyword}&from=${date}&category=${category}&apiKey=${NEWS_API_KEY}`
+        //     :
+        //     keyword.length > 0 ?
+        //     `https://newsapi.org/v2/everything?q=${keyword}&from=${date}&apiKey=${NEWS_API_KEY}`
+        //     :
+        //     `https://newsapi.org/v2/everything?q=${category}&from=${date}&apiKey=${NEWS_API_KEY}`
+        //   );
+        //   const newsapiData = await newsApiOnlyResponse.json();
+        //   allArticles = newsapiData.articles.map((article: any, index: number) => ({
+        //     id: `newsapi-${index}`,
+        //     title: article.title,
+        //     snippet: article.description,
+        //     imageUrl: article.urlToImage,
+        //     source: article.source.name,
+        //     date: article.publishedAt,
+        //   }));
+        //   break;
   
         case 'nyt':
           // Fetch from New York Times API
